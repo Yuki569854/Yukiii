@@ -41,7 +41,7 @@ MinBtn.TextSize = 20
 
 -- Mini Icon
 local MiniIcon = Instance.new("TextButton", ScreenGui)
-MiniIcon.Text = "\\||/"
+MiniIcon.Text = "®"
 MiniIcon.Size = UDim2.new(0, 60, 0, 30)
 MiniIcon.Position = UDim2.new(0.5, -30, 0.05, 0)
 MiniIcon.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
