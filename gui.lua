@@ -1,127 +1,112 @@
 local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
+local UIS = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
 
--- GUI Setup
-local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
-ScreenGui.Name = "YuKiGUI"
-
--- Main Frame
-local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 430, 0, 300)
-MainFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
-MainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
-MainFrame.BorderColor3 = Color3.fromRGB(80, 80, 80)
-MainFrame.Active = true
-MainFrame.Draggable = true
-
-local UICorner = Instance.new("UICorner", MainFrame)
-UICorner.CornerRadius = UDim.new(0, 10)
-
--- Title
-local Title = Instance.new("TextLabel", MainFrame)
-Title.Text = "YuKi"
-Title.Size = UDim2.new(1, -40, 0, 30)
-Title.BackgroundTransparency = 1
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-Title.Font = Enum.Font.SourceSansSemibold
-Title.TextSize = 18
-Title.Position = UDim2.new(0, 10, 0, 0)
-Title.TextXAlignment = Enum.TextXAlignment.Left
-
--- Minimize Button
-local MinBtn = Instance.new("TextButton", MainFrame)
-MinBtn.Text = "_"
-MinBtn.Size = UDim2.new(0, 30, 0, 30)
-MinBtn.Position = UDim2.new(1, -35, 0, 0)
-MinBtn.BackgroundTransparency = 1
-MinBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-MinBtn.Font = Enum.Font.SourceSansBold
-MinBtn.TextSize = 20
+-- Main GUI
+local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+screenGui.Name = "YukiScriptGui"
+screenGui.ResetOnSpawn = false
 
 -- Mini Icon
-local MiniIcon = Instance.new("TextButton", ScreenGui)
-MiniIcon.Text = "Yuki - Script"
-MiniIcon.Size = UDim2.new(0, 120, 0, 30)
-MiniIcon.Position = UDim2.new(0.5, -60, 0.05, 0)
-MiniIcon.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-MiniIcon.BorderColor3 = Color3.fromRGB(0, 255, 0) -- Green highlight
-MiniIcon.TextColor3 = Color3.fromRGB(255, 255, 255)
-MiniIcon.Font = Enum.Font.SourceSansBold
-MiniIcon.TextSize = 14
-MiniIcon.Visible = false
-MiniIcon.Active = true
-MiniIcon.Draggable = true
-Instance.new("UICorner", MiniIcon).CornerRadius = UDim.new(1, 0)
+local miniIcon = Instance.new("TextButton", screenGui)
+miniIcon.Size = UDim2.new(0, 100, 0, 30)
+miniIcon.Position = UDim2.new(0, 10, 0, 10)
+miniIcon.Text = "Yuki - Script"
+miniIcon.TextColor3 = Color3.new(1, 1, 1)
+miniIcon.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+miniIcon.BorderColor3 = Color3.fromRGB(80, 80, 80)
+miniIcon.Draggable = true
+miniIcon.Active = true
+miniIcon.Visible = true
 
--- Profile Section (bottom-left)
-local Profile = Instance.new("Frame", MainFrame)
-Profile.Size = UDim2.new(0, 200, 0, 40)
-Profile.Position = UDim2.new(0, 10, 1, -50)
-Profile.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-Profile.BorderColor3 = Color3.fromRGB(80, 80, 80)
+-- Main Frame
+local mainFrame = Instance.new("Frame", screenGui)
+mainFrame.Size = UDim2.new(0, 300, 0, 200)
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+mainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+mainFrame.BorderColor3 = Color3.fromRGB(80, 80, 80)
+mainFrame.Visible = false
+mainFrame.Active = true
+mainFrame.Draggable = true
 
-local ProfileText = Instance.new("TextLabel", Profile)
-ProfileText.Text = "Player: " .. LocalPlayer.Name .. " | Premium"
-ProfileText.Size = UDim2.new(1, -45, 1, 0)
-ProfileText.Position = UDim2.new(0, 0, 0, 0)
-ProfileText.TextColor3 = Color3.fromRGB(255, 255, 255)
-ProfileText.BackgroundTransparency = 1
-ProfileText.Font = Enum.Font.SourceSans
-ProfileText.TextSize = 13
-ProfileText.TextXAlignment = Enum.TextXAlignment.Left
+-- Title
+local title = Instance.new("TextLabel", mainFrame)
+title.Size = UDim2.new(1, 0, 0, 30)
+title.Text = "YuKi"
+title.TextColor3 = Color3.new(1, 1, 1)
+title.BackgroundTransparency = 1
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 20
 
--- Avatar Image
-local Avatar = Instance.new("ImageLabel", Profile)
-Avatar.Size = UDim2.new(0, 30, 0, 30)
-Avatar.Position = UDim2.new(1, -35, 0.5, -15)
-Avatar.BackgroundTransparency = 1
-Avatar.Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48)
-Avatar.ScaleType = Enum.ScaleType.Fit
+-- Tab Button
+local tabButton = Instance.new("TextButton", mainFrame)
+tabButton.Size = UDim2.new(0, 100, 0, 25)
+tabButton.Position = UDim2.new(0, 10, 0, 40)
+tabButton.Text = "Player Settings"
+tabButton.TextColor3 = Color3.new(1, 1, 1)
+tabButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+tabButton.BorderColor3 = Color3.fromRGB(80, 80, 80)
+tabButton.Font = Enum.Font.SourceSans
+tabButton.TextSize = 14
 
--- Tabs Frame
-local TabsFrame = Instance.new("Frame", MainFrame)
-TabsFrame.Size = UDim2.new(1, -20, 0, 30)
-TabsFrame.Position = UDim2.new(0, 10, 0, 40)
-TabsFrame.BackgroundTransparency = 1
+-- Container for settings
+local settingsFrame = Instance.new("Frame", mainFrame)
+settingsFrame.Size = UDim2.new(1, -20, 1, -80)
+settingsFrame.Position = UDim2.new(0, 10, 0, 70)
+settingsFrame.BackgroundTransparency = 1
 
--- Player Settings Tab Button
-local PlayerSettingsTabBtn = Instance.new("TextButton", TabsFrame)
-PlayerSettingsTabBtn.Text = "Player Settings"
-PlayerSettingsTabBtn.Size = UDim2.new(0, 120, 0, 30)
-PlayerSettingsTabBtn.Position = UDim2.new(0, 0, 0, 0)
-PlayerSettingsTabBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-PlayerSettingsTabBtn.BorderColor3 = Color3.fromRGB(80, 80, 80)
-PlayerSettingsTabBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-PlayerSettingsTabBtn.Font = Enum.Font.SourceSans
-PlayerSettingsTabBtn.TextSize = 14
+-- WalkSpeed Slider
+local walkLabel = Instance.new("TextLabel", settingsFrame)
+walkLabel.Size = UDim2.new(0, 200, 0, 20)
+walkLabel.Position = UDim2.new(0, 0, 0, 0)
+walkLabel.Text = "WalkSpeed:"
+walkLabel.TextColor3 = Color3.new(1, 1, 1)
+walkLabel.BackgroundTransparency = 1
+walkLabel.Font = Enum.Font.SourceSans
+walkLabel.TextSize = 14
 
--- Content Frame
-local ContentFrame = Instance.new("Frame", MainFrame)
-ContentFrame.Size = UDim2.new(1, -20, 1, -120)
-ContentFrame.Position = UDim2.new(0, 10, 0, 80)
-ContentFrame.BackgroundTransparency = 1
+local walkBox = Instance.new("TextBox", settingsFrame)
+walkBox.Size = UDim2.new(0, 50, 0, 20)
+walkBox.Position = UDim2.new(0, 100, 0, 0)
+walkBox.Text = "16"
+walkBox.TextColor3 = Color3.new(1, 1, 1)
+walkBox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+walkBox.BorderColor3 = Color3.fromRGB(80, 80, 80)
+walkBox.Font = Enum.Font.SourceSans
+walkBox.TextSize = 14
 
--- Player Settings Content
-local PlayerSettingsContent = Instance.new("Frame", ContentFrame)
-PlayerSettingsContent.Size = UDim2.new(1, 0, 1, 0)
-PlayerSettingsContent.Position = UDim2.new(0, 0, 0, 0)
-PlayerSettingsContent.BackgroundTransparency = 1
-PlayerSettingsContent.Visible = true
+walkBox.FocusLost:Connect(function()
+	local value = tonumber(walkBox.Text)
+	if value then
+		char:FindFirstChildOfClass("Humanoid").WalkSpeed = value
+	end
+end)
 
--- Inf Jump Toggle
-local InfJumpToggle = Instance.new("TextButton", PlayerSettingsContent)
-InfJumpToggle.Text = "Inf Jump: OFF"
-InfJumpToggle.Size = UDim2.new(0, 120, 0, 30)
-InfJumpToggle.Position = UDim2.new(0, 0, 0, 0)
-InfJumpToggle.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-InfJumpToggle.BorderColor3 = Color3.fromRGB(80, 80, 80)
-InfJumpToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
-InfJumpToggle.Font = Enum.Font.SourceSans
-InfJumpToggle.TextSize = 14
-
+-- InfJump
 local infJumpEnabled = false
+local infJumpToggle = Instance.new("TextButton", settingsFrame)
+infJumpToggle.Size = UDim2.new(0, 200, 0, 20)
+infJumpToggle.Position = UDim2.new(0, 0, 0, 30)
+infJumpToggle.Text = "Toggle Infinite Jump: OFF"
+infJumpToggle.TextColor3 = Color3.new(1, 1, 1)
+infJumpToggle.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+infJumpToggle.BorderColor3 = Color3.fromRGB(80, 80, 80)
+infJumpToggle.Font = Enum.Font.SourceSans
+infJumpToggle.TextSize = 14
 
-InfJumpToggle.MouseButton1Click:Connect(function()
+infJumpToggle.MouseButton1Click:Connect(function()
 	infJumpEnabled = not infJumpEnabled
-	if
+	infJumpToggle.Text = "Toggle Infinite Jump: " .. (infJumpEnabled and "ON" or "OFF")
+end)
+
+UIS.JumpRequest:Connect(function()
+	if infJumpEnabled then
+		char:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+	end
+end)
+
+-- Mini icon toggle GUI
+miniIcon.MouseButton1Click:Connect(function()
+	mainFrame.Visible = not mainFrame.Visible
+end)
